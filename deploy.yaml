@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp
 spec:
-  replicas: 5
+  replicas: 2
   selector:
     matchLabels:
       app: myapp
@@ -20,4 +20,4 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+        - containerPort: 3030
