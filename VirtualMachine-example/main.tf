@@ -52,7 +52,7 @@ resource "azurerm_public_ip" "pip01" {
   name = "hishalpip01"
   resource_group_name = azurerm_resource_group.az-rg01.name
   location = azurerm_resource_group.az-rg01.location
-  allocation_method = "Dynamic"  
+  allocation_method = "Static"  
 }
 resource "azurerm_network_interface" "nic01" {
   name= "hishalnic01"
@@ -72,7 +72,11 @@ resource "azurerm_linux_virtual_machine" "azvm01" {
   ]
   size = "Standard_F2"
   admin_username = "sesha"
-  admin_password = "seshasai@12345"
+  disable_password_authentication = true
+  admin_ssh_key {
+    username   = "sesha"
+    public_key = file("~/.ssh/id_rsa.pub")  # Make sure this file exists
+  }
    os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
