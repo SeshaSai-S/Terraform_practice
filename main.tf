@@ -15,8 +15,8 @@ resource "azurerm_resource_group" "rg-name" {
 }
 resource "azurerm_virtual_network" "vn-name" {
   name = " sesha-vn"
-  resource_group_name = azurerm_resource_group.rg-name
-  location = azurerm_resource_group.location
+  resource_group_name = azurerm_resource_group.rg-name.name
+  location = azurerm_resource_group.rg-name.location
   address_space = ["10.0.0.1/16"]  
 }
   
