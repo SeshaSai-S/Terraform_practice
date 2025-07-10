@@ -11,7 +11,7 @@ provider "azurerm" {
   subscription_id = "62734f71-99dc-45a0-aaeb-dcd7d04d41b7"
 }
 resource "azurerm_resource_group" "rg-name" {
-  name = "devops-practise"
+  name = "devops-practise-rg"
   location = "UK West"  
 }
 resource "azurerm_virtual_network" "vn-name" {
