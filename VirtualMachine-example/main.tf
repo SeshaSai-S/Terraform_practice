@@ -34,7 +34,7 @@ resource "azurerm_network_security_group" "nsg01" {
 resource "azurerm_network_security_rule" "nsr01" {
   name                        = "hishalnsr01"
   priority                    = 100
-  direction                   = "inbound"
+  direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
