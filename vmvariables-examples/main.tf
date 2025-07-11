@@ -60,7 +60,7 @@ resource "azurerm_network_interface" "nic_name" {
     resource_group_name = var.rg_name
     ip_configuration {
       name = "internal"
-      subnet_id = azurerm_subnet.azsn01.id
+      subnet_id = azurerm_subnet.sn_name.id
       private_ip_address_allocation = "Dynamic"
       public_ip_address_id = azurerm_public_ip.pip_name.id
     }  
