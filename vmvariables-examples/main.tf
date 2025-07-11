@@ -45,8 +45,8 @@ resource "azurerm_network_security_rule" "nsr_name" {
   network_security_group_name = var.nsg_name
 }
 resource "azurerm_subnet_network_security_group_association" "snsga01" {
-  subnet_id                 = azurerm_subnet.azsn01.id
-  network_security_group_id = azurerm_network_security_group.nsgname.id
+  subnet_id                 = azurerm_subnet.sn_name.id
+  network_security_group_id = azurerm_network_security_group.nsg_name.id
 }
 resource "azurerm_public_ip" "pip_name" {
    name = var.pip_name
@@ -62,7 +62,7 @@ resource "azurerm_network_interface" "nic_name" {
       name = "internal"
       subnet_id = azurerm_subnet.azsn01.id
       private_ip_address_allocation = "Dynamic"
-      public_ip_address_id = azurerm_public_ip.pip02.id
+      public_ip_address_id = azurerm_public_ip.pip_name.id
     }  
 }
 resource "azurerm_windows_virtual_machine" "vm_name" {
@@ -71,9 +71,9 @@ resource "azurerm_windows_virtual_machine" "vm_name" {
   location            = var.rg_location
   size                = "Standard_F2"
   admin_username      = "sesha"
-  admin_password      = "sesha@12345"
+  admin_password      = "sesha@123456"
   network_interface_ids = [
-    azurerm_network_interface.nic02.id,
+    azurerm_network_interface.nic_name.id,
   ]
 
   os_disk {
