@@ -19,6 +19,7 @@ resource "azurerm_virtual_network" "vn_name"{
     resource_group_name = var.rg_name
     location = var.rg_location
     address_space = ["10.0.0.0/16"]
+    depends_on = [ azurerm_resource_group.rg_name ]
 }
 resource "azurerm_subnet" "sn_name" {
     name = var.sn_name
@@ -36,6 +37,7 @@ resource "azurerm_network_interface" "nic_name" {
       private_ip_address_allocation = "Dynamic"
       public_ip_address_id = azurerm_public_ip.pip_name.id
     }  
+    depends_on = [ azurerm_resource_group.rg_name,azurerm_subnet.sn_name ]
 }
 resource "azurerm_public_ip" "pip_name" {
    name = var.pip_name
@@ -87,4 +89,5 @@ resource "azurerm_windows_virtual_machine" "vm_name" {
     sku       = "2016-Datacenter"
     version   = "latest"
   }
+  depends_on = [ azurerm_resource_group.rg_name ]
 }
