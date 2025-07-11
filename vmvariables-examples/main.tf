@@ -10,28 +10,28 @@ provider "azurerm" {
     features {}
     subscription_id = "62734f71-99dc-45a0-aaeb-dcd7d04d41b7"  
 }
-resource "azurerm_resource_group" "az-rg01" {
+resource "azurerm_resource_group" "rg_name" {
     name = var.rg_name
     location = var.rg_location  
 }
-resource "azurerm_virtual_network" "az-vn01"{
+resource "azurerm_virtual_network" "vn_name"{
     name = var.vn_name
     resource_group_name = var.rg_name
     location = var.rg_location
     address_space = ["10.0.0.0/16"]
 }
-resource "azurerm_subnet" "azsn01" {
+resource "azurerm_subnet" "sn_name" {
     name = var.sn_name
     resource_group_name = var.rg_name
     virtual_network_name = var.vn_name
     address_prefixes = ["10.0.1.0/24"]  
 }
-resource "azurerm_network_security_group" "nsgname" {
+resource "azurerm_network_security_group" "nsg_name" {
   name                = var.nsg_name
   location            = var.rg_location
   resource_group_name = var.rg_name
 }
-resource "azurerm_network_security_rule" "nsrname" {
+resource "azurerm_network_security_rule" "nsr_name" {
   name                        = var.nsr_name
   priority                    = 100
   direction                   = "Inbound"
@@ -44,17 +44,17 @@ resource "azurerm_network_security_rule" "nsrname" {
   resource_group_name         = var.rg_name
   network_security_group_name = var.nsg_name
 }
-resource "azurerm_subnet_network_security_group_association" "snsganame" {
+resource "azurerm_subnet_network_security_group_association" "snsga01" {
   subnet_id                 = azurerm_subnet.azsn01.id
   network_security_group_id = azurerm_network_security_group.nsgname.id
 }
-resource "azurerm_public_ip" "pip02" {
+resource "azurerm_public_ip" "pip_name" {
    name = var.pip_name
    resource_group_name = var.rg_name
    location = var.rg_location
    allocation_method = "Static"  
 }
-resource "azurerm_network_interface" "nic02" {
+resource "azurerm_network_interface" "nic_name" {
     name = var.nic_name
     location = var.rg_location
     resource_group_name = var.rg_name
@@ -65,7 +65,7 @@ resource "azurerm_network_interface" "nic02" {
       public_ip_address_id = azurerm_public_ip.pip02.id
     }  
 }
-resource "azurerm_windows_virtual_machine" "vmname" {
+resource "azurerm_windows_virtual_machine" "vm_name" {
   name                = var.vm_name
   resource_group_name = var.rg_name
   location            = var.rg_location
