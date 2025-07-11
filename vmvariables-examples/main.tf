@@ -26,6 +26,23 @@ resource "azurerm_subnet" "sn_name" {
     virtual_network_name = var.vn_name
     address_prefixes = ["10.0.1.0/24"]  
 }
+resource "azurerm_network_interface" "nic_name" {
+    name = var.nic_name
+    location = var.rg_location
+    resource_group_name = var.rg_name
+    ip_configuration {
+      name = "internal"
+      subnet_id = azurerm_subnet.sn_name.id
+      private_ip_address_allocation = "Dynamic"
+      public_ip_address_id = azurerm_public_ip.pip_name.id
+    }  
+}
+resource "azurerm_public_ip" "pip_name" {
+   name = var.pip_name
+   resource_group_name = var.rg_name
+   location = var.rg_location
+   allocation_method = "Static"  
+}
 resource "azurerm_network_security_group" "nsg_name" {
   name                = var.nsg_name
   location            = var.rg_location
@@ -47,23 +64,6 @@ resource "azurerm_network_security_rule" "nsr_name" {
 resource "azurerm_subnet_network_security_group_association" "snsga01" {
   subnet_id                 = azurerm_subnet.sn_name.id
   network_security_group_id = azurerm_network_security_group.nsg_name.id
-}
-resource "azurerm_public_ip" "pip_name" {
-   name = var.pip_name
-   resource_group_name = var.rg_name
-   location = var.rg_location
-   allocation_method = "Static"  
-}
-resource "azurerm_network_interface" "nic_name" {
-    name = var.nic_name
-    location = var.rg_location
-    resource_group_name = var.rg_name
-    ip_configuration {
-      name = "internal"
-      subnet_id = azurerm_subnet.sn_name.id
-      private_ip_address_allocation = "Dynamic"
-      public_ip_address_id = azurerm_public_ip.pip_name.id
-    }  
 }
 resource "azurerm_windows_virtual_machine" "vm_name" {
   name                = var.vm_name

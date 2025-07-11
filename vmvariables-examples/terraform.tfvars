@@ -1,4 +1,4 @@
-rg_name = "LendingGrid01"
+rg_name = "LendingGrid02"
 rg_location = "UK West"
 vn_name = "LendingVN01"
 sn_name = "LendingSN01"
