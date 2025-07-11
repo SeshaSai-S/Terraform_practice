@@ -25,7 +25,8 @@ resource "azurerm_subnet" "sn_name" {
     name = var.sn_name
     resource_group_name = var.rg_name
     virtual_network_name = var.vn_name
-    address_prefixes = ["10.0.1.0/24"]  
+    address_prefixes = ["10.0.1.0/24"] 
+    depends_on = [ azurerm_virtual_network.vn_name ]
 }
 resource "azurerm_network_interface" "nic_name" {
     name = var.nic_name
