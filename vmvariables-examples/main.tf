@@ -60,7 +60,7 @@ resource "azurerm_network_interface" "nic02" {
     resource_group_name = var.rg_name
     ip_configuration {
       name = "internal"
-      subnet_id = azurerm_subnet.azsn01
+      subnet_id = azurerm_subnet.azsn01.id
       private_ip_address_allocation = "Dynamic"
       public_ip_address_id = azurerm_public_ip.pip02.id
     }  
@@ -73,7 +73,7 @@ resource "azurerm_windows_virtual_machine" "vmname" {
   admin_username      = "sesha"
   admin_password      = "sesha@12345"
   network_interface_ids = [
-    azurerm_network_interface.example.id,
+    azurerm_network_interface.nic02.id,
   ]
 
   os_disk {
