@@ -14,3 +14,11 @@ variable "sn_name" {
     type = string
     description = "subnet name"
 }
+variable "AKSName" {
+    type = string
+    description = "subnet name"
+}
+variable "acr" {
+    type = string
+    description = "subnet name"
+}
