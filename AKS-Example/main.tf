@@ -51,7 +51,7 @@ resource "azurerm_kubernetes_cluster" "AKSName" {
   network_profile {
     network_plugin = "azure"
     network_policy = "calico"
-    dns_service_ip = "10.0.0.0"
+    dns_service_ip = "10.0.0.10"
     service_cidr = "10.0.0.0/16"
     load_balancer_sku = "standard"
   }
