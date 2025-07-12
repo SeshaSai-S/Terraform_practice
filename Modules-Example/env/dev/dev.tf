@@ -11,7 +11,7 @@ provider "azurerm" {
     subscription_id = "62734f71-99dc-45a0-aaeb-dcd7d04d41b7"  
 }
 module "dev" {
-    source = "https://github.com/SeshaSai-S/Terraform_practice/tree/main/Modules-Example/env/dev"
+    source = "../../module"
     rg_name = "DEVRG12"
     rg_location = "UK West"
     vn_name = "DEVVN01"
