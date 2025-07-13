@@ -76,10 +76,10 @@ resource "azurerm_linux_virtual_machine" "myvm" {
   network_interface_ids = [ azurerm_network_interface.nic_name[count.index].id, 
   ]
   size = "Standard_F2"
-  admin_username = "sesha"
+  admin_username = "sesha1"
   disable_password_authentication = true
   admin_ssh_key {
-    username   = "sesha"
+    username   = "sesha1"
     public_key = file("~/.ssh/id_rsa.pub")  # Make sure this file exists
   }
    os_disk {
