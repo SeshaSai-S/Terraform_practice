@@ -23,22 +23,22 @@ resource "azurerm_virtual_network" "vnet_name" {
 
     name = each.value.vnet_name
     address_space = each.value.address_space
-    resource_group_name = azurerm_resource_group.rg_name[each.key].name
-    location = azurerm_resource_group.rg_name[each.key].location  
+   location = each.value.location
+    resource_group_name = each.value.rg_name 
 }
 resource "azurerm_subnet" "subnet_name" {
     for_each = var.resourcedetails
     name = each.value.subnet_name
     address_prefixes = each.value.address_prefixes
-    resource_group_name = azurerm_resource_group.rg_name[each.key].name
-    virtual_network_name = azurerm_virtual_network.vnet_name[each.key].name
+    resource_group_name = each.value.rg_name
+    virtual_network_name = each.value.vnet_name
   
 }
 resource "azurerm_network_interface" "nic" {
     for_each = var.resourcedetails
     name = "my-nic"
-    location = azurerm_resource_group.rg_name[each.key].location
-    resource_group_name = azurerm_resource_group.rg_name[each.key].name
+    location = each.value.location
+    resource_group_name = each.value.rg_name
     ip_configuration {
       name = "my-ip-config"
       subnet_id = azurerm_subnet.subnet_name[each.key].id
@@ -49,8 +49,8 @@ resource "azurerm_virtual_machine" "vm" {
     for_each = var.resourcedetails
 
     name = each.value.vm_name
-    location = azurerm_resource_group.rg_name[each.key].location
-    resource_group_name = azurerm_resource_group.rg_name[each.key].name
+    location = each.value.location
+    resource_group_name = each.value.rg_name
     network_interface_ids = [azurerm_network_interface.nic[each.key].id]
     vm_size = each.value.size  
 
