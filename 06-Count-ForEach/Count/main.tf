@@ -27,6 +27,26 @@ resource "azurerm_subnet" "mysubnet" {
     resource_group_name = var.myrg
     address_prefixes = [var.address_prefixes[count.index]]  
 }
+resource "azurerm_network_interface" "nicname" {
+  count               = 3
+  name                = "nicname-${count.index}"
+  resource_group_name = azurerm_resource_group.myrg.name
+  location            = azurerm_resource_group.myrg.location
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.mysubnet[count.index].id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.pip123[count.index].id
+  }
+}
+resource "azurerm_public_ip" "pip123" {
+  count = length(var.pip123)   
+  name = var.pip123[count.index]
+  resource_group_name = azurerm_resource_group.myrg.name
+  location = azurerm_resource_group.myrg.location
+  allocation_method = "Static"  
+}
 resource "azurerm_network_security_group" "nsg01" {
   name = "hishalnsg01"
   resource_group_name = azurerm_resource_group.myrg.name
@@ -49,31 +69,12 @@ resource "azurerm_subnet_network_security_group_association" "snsga01" {
   subnet_id = azurerm_subnet.mysubnet.id
   network_security_group_id = azurerm_network_security_group.nsg01.id
 }
-resource "azurerm_public_ip" "pip123" {
-  count = length(var.pip123)   
-  name = var.pip123[count.index]
-  resource_group_name = azurerm_resource_group.myrg.name
-  location = azurerm_resource_group.myrg.location
-  allocation_method = "Static"  
-}
-resource "azurerm_network_interface" "nic_name" {
-  count = 3
-  name = "nic_name-${count.index}"
-  resource_group_name = azurerm_resource_group.myrg.name
-  location = azurerm_resource_group.myrg.location  
-  ip_configuration {
-    name = "internal"
-    subnet_id = azurerm_subnet.mysubnet[count.index].id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.pip123[count.index].id
-  }
-}
 resource "azurerm_linux_virtual_machine" "myvm" {
   count = 3 
   name     = "vm01-${count.index}"
   resource_group_name = azurerm_resource_group.myrg.name
   location  = azurerm_resource_group.myrg.location
-  network_interface_ids = [ azurerm_network_interface.nic_name[count.index].id, 
+  network_interface_ids = [ azurerm_network_interface.nicname[count.index].id, 
   ]
   size = "Standard_F2"
   admin_username = "sesha1"
