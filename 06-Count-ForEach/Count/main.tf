@@ -63,9 +63,9 @@ resource "azurerm_network_interface" "nic_name" {
   location = azurerm_resource_group.myrg.location  
   ip_configuration {
     name = "internal"
-    subnet_id = azurerm_subnet.mysubnet[count.index].id
+    subnet_id = azurerm_subnet.mysubnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.pip123[count.index].id
+    public_ip_address_id = azurerm_public_ip.pip123.id
   }
 }
 resource "azurerm_linux_virtual_machine" "myvm" {
