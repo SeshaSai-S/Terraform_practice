@@ -1,6 +1,6 @@
 variable "resourcedetails" {
     type = map(object({
-      vn_name = string
+      vm_name = string
       location = string
       size = string
       rg_name = string
