@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name = "dev0ps-practise"
+    resource_group_name = "devops-practise"
     storage_account_name = "seshasac01"
     container_name = "terraform"
     key = "DEV/dev.terraform.tfstate"
