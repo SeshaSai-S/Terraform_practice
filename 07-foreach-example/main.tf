@@ -34,3 +34,44 @@ resource "azurerm_subnet" "subnet_name" {
     virtual_network_name = azurerm_virtual_network.vnet_name[each.key].name
   
 }
+resource "azurerm_network_interface" "nic" {
+    for_each = var.resourcedetails
+    name = "my-nic"
+    location = azurerm_resource_group.rg_name[each.key].location
+    resource_group_name = azurerm_resource_group.rg_name[each.key].name
+    ip_configuration {
+      name = "my-ip-config"
+      subnet_id = azurerm_subnet.subnet_name[each.key].subnet_id
+      private_ip_address_allocation = "Dynamic"
+    }
+}
+resource "azurerm_virtual_machine" "vm_name" {
+    for_each = var.resourcedetails
+
+    name = each.value.vm_name
+    location = azurerm_resource_group.rg_name[each.key].location
+    resource_group_name = azurerm_resource_group.rg_name[each.key].name
+    network_interface_ids = [azurerm_network_interface.nic[each.key].id]
+    vm_size = each.value.size  
+
+    storage_image_reference {
+    publisher = "Canonical"
+    offer     = "ubuntu-server"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "${each.value.vm_name}-osdisk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+  os_profile {
+    computer_name  = each.value.vm_name
+    admin_username = "testadmin"
+    admin_password = "Password1234!"
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+ }
+}
