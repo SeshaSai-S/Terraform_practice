@@ -46,7 +46,7 @@ resource "azurerm_network_security_rule" "nsr01" {
   network_security_group_name = azurerm_network_security_group.nsg01.name
 }
 resource "azurerm_subnet_network_security_group_association" "snsga01" {
-  subnet_id = azurerm_subnet.mysubnet[count.index].id
+  subnet_id = azurerm_subnet.mysubnet.id
   network_security_group_id = azurerm_network_security_group.nsg01.id
 }
 resource "azurerm_public_ip" "pip123" {
