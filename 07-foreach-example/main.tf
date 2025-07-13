@@ -45,7 +45,7 @@ resource "azurerm_network_interface" "nic" {
       private_ip_address_allocation = "Dynamic"
     }
 }
-resource "azurerm_virtual_machine" "vm_name" {
+resource "azurerm_virtual_machine" "vm" {
     for_each = var.resourcedetails
 
     name = each.value.vm_name
