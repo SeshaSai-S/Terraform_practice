@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "nic" {
     resource_group_name = azurerm_resource_group.rg_name[each.key].name
     ip_configuration {
       name = "my-ip-config"
-      subnet_id = azurerm_subnet.subnet_name[each.key].subnet_id
+      subnet_id = azurerm_subnet.subnet_name[each.key].id
       private_ip_address_allocation = "Dynamic"
     }
 }
