@@ -1,4 +1,4 @@
-variable "rgname" {
+variable "myrg" {
     type = string  
 }
 variable "rglocation" {
@@ -17,3 +17,6 @@ variable "address_prefixes" {
     type = list(string)
   
 }
+variable "pip123" {
+    type = list(string)
+ }
