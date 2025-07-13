@@ -20,12 +20,12 @@ provider "azurerm" {
 }
 module "dev" {
     source = "../../module"
-    rg_name = "DEVRG12"
+    rg_name = "DEVRG123"
     rg_location = "UK West"
-    vn_name = "DEVVN01"
-    sn_name = "DEVSN01"
-    AKSName = "DEVAKS01"
-    acr    = "DEVACR01"
+    vn_name = "DEVVN013"
+    sn_name = "DEVSN013"
+    AKSName = "DEVAKS013"
+    acr    = "DEVACR013"
     address_space = [ "10.0.0.0/16" ]
     address_prefixes = [ "10.0.1.0/24" ]
 }
