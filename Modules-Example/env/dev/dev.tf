@@ -5,6 +5,14 @@ terraform {
       version = "=4.35.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name = "dev0ps-practise"
+    storage_account_name = "seshasac01"
+    container_name = "terraform"
+    key = "DEV/dev.terraform.tfstate"
+    subscription_id = "62734f71-99dc-45a0-aaeb-dcd7d04d41b7"   
+ 
+  }
 }
 provider "azurerm" {
     features {}
